@@ -55,8 +55,8 @@ public class VirtualPet
 
 	private String name = "";
 	private String desc = "";
-	private int hunger = 0;
-	private int fun = 0;
-	private int energy = 0;
+	private int hunger = 50;
+	private int fun = 50;
+	private int energy = 50;
 
 }

@@ -67,7 +67,7 @@ public class VirtualPetShelterTest
 		int expectedTotalHungerValues = 0; 
 		for (VirtualPet pet : vps.getPets())
 		{
-			expectedTotalHungerValues += pet.getHunger();
+			expectedTotalHungerValues += pet.getHunger() + 1;
 		}
 		assertThat(60, is(expectedTotalHungerValues));
 	}

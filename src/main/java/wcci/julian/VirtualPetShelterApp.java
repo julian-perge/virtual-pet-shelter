@@ -10,8 +10,7 @@ public class VirtualPetShelterApp
 	public static void main(String[] args)
 	{
 		Scanner input = new Scanner(System.in);
-		
-		
+
 		VirtualPet pet1 = new VirtualPet("Jojo", "Jojo's Bizarre Adventure", 75, 75, 75);
 		VirtualPet pet2 = new VirtualPet("Vash", "Trigun", 90, 90, 90);
 		VirtualPet pet3 = new VirtualPet("Nails", "A band?", 66, 66, 66);
@@ -26,11 +25,10 @@ public class VirtualPetShelterApp
 
 		printAllPetsInShelter(vps);
 
-		printListOfActions();
+		//printListOfActions();
+		String userMenuChoice = "";
+//		isValidMenuChoice(userMenuChoice);
 
-		String userMenuChoice = input.nextLine();
-		isValidMenuChoice(userMenuChoice);
-		
 		do
 		{
 			gameLoop(input, userMenuChoice);
@@ -41,7 +39,6 @@ public class VirtualPetShelterApp
 			}
 		} while (isValidMenuChoice(userMenuChoice));
 
-		
 	}
 
 	private static void printListOfActions()
@@ -54,13 +51,12 @@ public class VirtualPetShelterApp
 
 	private static boolean isValidMenuChoice(String userMenuChoice)
 	{
-		if (!userMenuChoice.equals("1") && !userMenuChoice.equals("2")
-				&& !userMenuChoice.equals("3") && !userMenuChoice.equals("4") 
-				&& !userMenuChoice.equals("5") && !userMenuChoice.equals("6"))
+		if (!userMenuChoice.equals("1") && !userMenuChoice.equals("2") && !userMenuChoice.equals("3")
+				&& !userMenuChoice.equals("4") && !userMenuChoice.equals("5") && !userMenuChoice.equals("6"))
 		{
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -79,28 +75,36 @@ public class VirtualPetShelterApp
 			System.out.println("[" + pet.getName() + "]\t" + pet.getDesc());
 		}
 	}
-	
+
 	private static Boolean gameLoop(Scanner input, String userMenuChoice)
 	{
 		isOnShift = true;
-		
-		while (isOnShift) 
+
+		while (isOnShift)
 		{
+			printListOfActions();
 			userMenuChoice = input.nextLine();
 			switch (userMenuChoice)
 			{
+				case "0":
+					printAllPetsInShelter(vps);
+					break;
 				case "1":
 					vps.feedAll();
+					vps.tick(1);
 					System.out.println("\nYou feed all the pets! They are very happy! ^_^");
 					break;
 				case "2":
 					vps.playWithAll();
+					vps.tick(2);
 					System.out.println("\nYou play with all the pets! They seem very tired...");
 					break;
 				case "3":
 					System.out.println("\nWhich pet would you like to interact with?");
 					printAllPetsAndDescriptions(vps);
 					String petToInteractWith = input.nextLine();
+					// error is thrown if pet to interact with is entered in lowercase
+					// will fix at some point
 					vps.returnSpecificPet(petToInteractWith).play();
 					System.out.println("You played with " + vps.returnSpecificPet(petToInteractWith).getName() + "!");
 					break;
@@ -108,16 +112,19 @@ public class VirtualPetShelterApp
 					System.out.println("\nWhich pet would you like to adopt?");
 					String petToAdopt = input.nextLine();
 					vps.adoptPet(vps.returnSpecificPet(petToAdopt));
+					vps.tick(4);
 					break;
 				case "5":
 					System.out.println("That poor thing! What would you like to name it?");
 					String petToAdmit = input.nextLine();
 					System.out.println("And what about a description?");
 					String petToAdmitsDesc = input.nextLine();
+					vps.tick(5);
 					System.out.println(
 							"Let's make sure " + petToAdmit + " has a cozy time here until he goes to a loving home.");
 					vps.addPet(new VirtualPet(petToAdmit, petToAdmitsDesc));
 					System.out.println("[" + petToAdmit + "] " + petToAdmitsDesc + " has joined the shelter crew!");
+					vps.tick(5);
 					break;
 				case "6":
 					System.out.println("Shift is over. See you tomorrow!");
@@ -130,10 +137,7 @@ public class VirtualPetShelterApp
 					gameLoop(input, userMenuChoice);
 					break;
 			}
-			
-			printListOfActions();
 		}
 		return isOnShift;
 	}
-
 }

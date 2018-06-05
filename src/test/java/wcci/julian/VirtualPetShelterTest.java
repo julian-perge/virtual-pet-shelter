@@ -63,30 +63,55 @@ public class VirtualPetShelterTest
 	@Test
 	public void shouldFeedAllPets()
 	{
-		vps.feedAll();
-		int expectedTotalHungerValues = 0; 
+		int originalTotalHungerValues = 0;
+		int expectedTotalHungerValues = 0;
+		int expectedDifferenceAfterFeedingAllPets = 60;
+		
 		for (VirtualPet pet : vps.getPets())
 		{
-			expectedTotalHungerValues += pet.getHunger() + 1;
+			originalTotalHungerValues += pet.getHunger();
 		}
-		assertThat(60, is(expectedTotalHungerValues));
+		
+		vps.feedAll();
+		for (VirtualPet pet : vps.getPets())
+		{
+			expectedTotalHungerValues += pet.getHunger();
+		}
+		
+		
+		assertThat(expectedDifferenceAfterFeedingAllPets, is(expectedTotalHungerValues - originalTotalHungerValues));
 	}
 	
 	@Test
 	public void shouldPlayWithAllPetsAndLowerEnergyValuesOfEachPet()
 	{
-		vps.playWithAll();
+		//vps.playWithAll();
 		int expectedTotalFunValues = 0;
 		int expectedTotalEnergyValues = 0;
 		
+		int originalTotalFunValuesOfPets = 0;
+		int originalTotalEnergyValuesOfPets = 0;
+		
 		for (VirtualPet pet : vps.getPets())
+		{
+			originalTotalFunValuesOfPets += pet.getFun();
+			originalTotalEnergyValuesOfPets += pet.getEnergy();
+		}
+		
+		vps.playWithAll();
+		
+		for(VirtualPet pet : vps.getPets())
 		{
 			expectedTotalFunValues += pet.getFun();
 			expectedTotalEnergyValues += pet.getEnergy();
 		}
-		assertThat(60, is(expectedTotalFunValues));
 		
-		assertThat(-60, is(expectedTotalEnergyValues));
+		int expectedDifferenceOfAlteredFunValues = expectedTotalFunValues - originalTotalFunValuesOfPets;
+		int expectedDifferenceOfAlteredEnergyValues = expectedTotalEnergyValues - originalTotalEnergyValuesOfPets;
+		
+		assertThat(60, is(expectedDifferenceOfAlteredFunValues));
+		
+		assertThat(-60, is(expectedDifferenceOfAlteredEnergyValues));
 	}
 	
 	

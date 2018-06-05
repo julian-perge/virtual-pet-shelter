@@ -1,5 +1,4 @@
 package wcci.julian;
-import java.util.Scanner;
 
 public class VirtualPetShelterAppTest
 {

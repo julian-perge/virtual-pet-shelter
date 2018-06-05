@@ -11,6 +11,21 @@ public class VirtualPet
 		this.energy = energy;
 	}
 
+	public void setHunger(int hunger)
+	{
+		this.hunger = hunger;
+	}
+
+	public void setFun(int fun)
+	{
+		this.fun = fun;
+	}
+
+	public void setEnergy(int energy)
+	{
+		this.energy = energy;
+	}
+
 	public VirtualPet(String name, String desc)
 	{
 		this.name = name;
